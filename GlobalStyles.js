@@ -7,6 +7,7 @@ const GlobalStyles = StyleSheet.create({
     fontSize: 19,
   },
   container: {
+    flex: 1,
     padding: 28,
   },
   button: {

@@ -57,35 +57,36 @@ export default function PersonalPage({ navigation }) {
             alignItems: "center",
             backgroundColor: "#f2f2f2",
             padding: 17,
-            borderRadius: 5,
+            borderRadius: 12,
           }}
         >
-          <Text style={{ fontSize: 17 }}>
-            <Text style={{ fontWeight: "bold" }}>老人：</Text>
+          <Text style={{ fontSize: 17, fontWeight: "bold" }}>
+            <Text>老人：</Text>
             {userData.firstName} {userData.lastName}
           </Text>
-          <Text style={{ fontSize: 17 }}>
-            <Text style={{ fontWeight: "bold" }}>年龄：</Text>
-            {userData.age} 岁
+          {/* <Text style={{ fontSize: 17, fontWeight: "bold" }}> */}
+          <Text style={{ fontSize: 17, fontWeight: "bold" }}>
+            年龄：
+            <Text style={{ color: "#0a5fff" }}> {userData.age}岁 </Text>
           </Text>
+          {/* </Text> */}
           <Text style={{ fontSize: 17 }}>
             <Text style={{ fontWeight: "bold" }}>本人：</Text>
-            {userData.username}
+            {userData.guardian}
           </Text>
         </View>
       </View>
-
       <Button
         mode="elevated"
         buttonColor={"white"}
-        icon="chevron-right"
+        icon="logout"
         onPress={logout}
         style={styles.button}
         contentStyle={styles.flexReverse}
         labelStyle={{ fontSize: 20 }}
         iconSize={35}
       >
-        退出
+        退出登录
       </Button>
       {/* <Button
         mode="elevated"
@@ -102,7 +103,7 @@ export default function PersonalPage({ navigation }) {
       <Button
         mode="elevated"
         buttonColor={"white"}
-        icon="chevron-right"
+        icon="comment-text-outline"
         onPress={() => {
           navigation.navigate("意见反馈");
         }}
@@ -116,7 +117,7 @@ export default function PersonalPage({ navigation }) {
       <Button
         mode="elevated"
         buttonColor={"white"}
-        icon="chevron-right"
+        icon="contactless-payment"
         onPress={() => {
           navigation.navigate("联系管理人员");
         }}
@@ -127,6 +128,15 @@ export default function PersonalPage({ navigation }) {
       >
         联系管理人员
       </Button>
+      <View style={styles.flexEnd}>
+        <Image
+          source={require("../assets/big__1_-removebg.png")}
+          style={styles.icon}
+        />
+        <Text style={{ fontSize: 14, color: "lightgray", alignSelf: "center" }}>
+          智慧养老APP
+        </Text>
+      </View>
     </View>
   );
 }
@@ -143,11 +153,22 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     backgroundColor: "white",
     padding: 20,
-    borderRadius: 5,
+    borderRadius: 10,
     alignItems: "center",
   },
   button: {
-    borderRadius: 5,
+    borderRadius: 8,
     marginBottom: 30,
+    padding: 10,
+  },
+  icon: {
+    alignSelf: "center",
+    height: 70,
+    width: 70,
+    opacity: 0.5,
+  },
+  flexEnd: {
+    flex: 1,
+    justifyContent: "flex-end",
   },
 });

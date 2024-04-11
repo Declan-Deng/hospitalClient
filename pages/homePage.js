@@ -77,7 +77,7 @@ const Homepage = () => {
         fetchData();
 
         // TODO: 更改时间间隔
-        const interval = setInterval(fetchData, 1000 * 2 * 60); // 每5分钟获取一次数据
+        const interval = setInterval(fetchData, 5000); // 每5分钟获取一次数据
 
         return () => {
             clearInterval(interval); // 在组件卸载时清除定时器

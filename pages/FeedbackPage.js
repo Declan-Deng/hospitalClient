@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useState } from "react";
-import { IconButton, TextInput, Button } from "react-native-paper";
+import { IconButton, TextInput, Button, Chip } from "react-native-paper";
 import GlobalStyles from "../GlobalStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -91,14 +91,38 @@ export default function FeedbackPage() {
 
   return (
     <View style={GlobalStyles.container}>
-      <View style={styles.row}>
-        <Image source={require("../assets/nurse.jpg")} style={styles.image} />
-        <Text style={{ fontWeight: 700, fontSize: 21 }}>管理人员：林马特</Text>
+      <View
+        style={{
+          backgroundColor: "#ededed",
+          padding: 20,
+          borderRadius: 10,
+          marginBottom: 20,
+        }}
+      >
+        <View style={styles.row}>
+          <Image source={require("../assets/nurse.jpg")} style={styles.image} />
+          <View style={{ flexDirection: "column", gap: 10 }}>
+            <Text style={{ fontWeight: 700, fontSize: 21 }}>管理人员</Text>
+            <Text style={{ fontWeight: 700, fontSize: 21, color: "#1652ca" }}>
+              李莉
+            </Text>
+            <Chip
+              // icon="medal-outline"
+              onPress={() => console.log("Pressed")}
+              style={{ backgroundColor: "#f3cd18" }}
+              selectedColor={"white"}
+            >
+              金牌护工
+            </Chip>
+          </View>
+        </View>
+
+        <Text style={{ alignSelf: "center", fontSize: 16, fontWeight: "bold" }}>
+          「请对该管理人员评价并提出宝贵的建议」
+        </Text>
+
+        <StarRating rating={rating} onRate={setRating} />
       </View>
-      <Text style={{ alignSelf: "center", fontSize: 16 }}>
-        请对该管理人员员评价并提出宝贵的建议
-      </Text>
-      <StarRating rating={rating} onRate={setRating} />
 
       <TextInput
         mode="outlined"
@@ -109,7 +133,7 @@ export default function FeedbackPage() {
         numberOfLines={6} // 根据需要调整行数
         style={{ height: 150, marginBottom: 40 }} // 调整高度以适应更多的文本
         placeholder="请输入意见和建议"
-        outlineStyle={{ borderRadius: 10 }}
+        outlineStyle={{ borderRadius: 15 }}
       />
       <Button
         mode="elevated"
@@ -130,19 +154,20 @@ const styles = StyleSheet.create({
   image: {
     width: 120,
     height: 190,
-    borderRadius: 10,
+    borderRadius: 15,
   },
   row: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
     marginBottom: 40,
+    gap: 20,
   },
   rowStar: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
-    marginBottom: 20,
+    // marginBottom: 20,
   },
   bigButton: {
     borderRadius: 6,

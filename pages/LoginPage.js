@@ -41,6 +41,7 @@ export default function LoginPagePage({ navigation }) {
     // TODO: 测试专用
     navigation.navigate("首页");
     return;
+
     if (!phoneNumber) {
       Toast.show({ type: "error", text1: "手机号不能为空" });
       return;
