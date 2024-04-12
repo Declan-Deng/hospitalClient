@@ -7,7 +7,9 @@ import axios from "axios";
 import { API_BASE_URL } from "../config";
 
 import {
+  ActivityIndicator,
   MD2Colors,
+  HelperText,
   TextInput,
   Button,
 } from "react-native-paper";
@@ -17,6 +19,7 @@ export default function LoginPagePage({ navigation }) {
   const [password, setPassword] = useState("");
   const [flatTextSecureEntry, setFlatTextSecureEntry] = useState(true);
 
+  const [loading, setLoading] = useState(false);
 
   const inputActionHandler = (field, value) => {
     if (field === "phoneNumber") {
@@ -35,10 +38,7 @@ export default function LoginPagePage({ navigation }) {
   };
 
   const handleLogin = async () => {
-    // TODO: 测试专用
-    navigation.navigate("首页");
     return;
-
     if (!phoneNumber) {
       Toast.show({ type: "error", text1: "手机号不能为空" });
       return;
