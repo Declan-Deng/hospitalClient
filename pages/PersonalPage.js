@@ -19,7 +19,7 @@ export default function PersonalPage({ navigation }) {
     const fetchUserInfo = async () => {
       try {
         const token = await AsyncStorage.getItem("userToken");
-        const response = await axios.get(`${API_BASE_URL}/resident/info/2`, {
+        const response = await axios.get(`${API_BASE_URL}/resident/info`, {
           headers: {
             token: token,
           },

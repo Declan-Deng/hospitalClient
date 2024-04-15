@@ -10,14 +10,21 @@ const GlobalStyles = StyleSheet.create({
     flex: 1,
     padding: 28,
   },
+
   button: {
-    borderRadius: 6,
+    
+    borderRadius: 10,
     width: "40%",
     alignSelf: "center",
-    marginTop: 100,
+    marginTop: 30,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 0
   },
+
   ButtonFontStyles: {
-    fontSize: 22,
+    fontSize: 20,
   },
 });
 
