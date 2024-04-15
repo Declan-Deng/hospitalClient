@@ -45,9 +45,7 @@ const Homepage = () => {
   const [alertData, setAlertData] = useState([]);
 
   const handlePress = (key) => {
-    console.log("Navigating to DetailScreen with key:", key);
-
-    navigation.navigate("详情界面", { key: key });
+    navigation.navigate("DetailScreen", { key: key });
   };
 
   useEffect(() => {
@@ -126,9 +124,9 @@ const Homepage = () => {
           <HealthCard
             key={index}
             title={item.title}
-            value={`${item.value}`}
+            value={`当前${item.title}: ${item.value}`}
             image={item.image}
-            onPress={() => handlePress(item.title)}
+            onPress={() => handlePress(item.key)}
           />
         ))}
       </ScrollView>

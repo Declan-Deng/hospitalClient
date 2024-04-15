@@ -3,6 +3,10 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Modal, Portal, Button } from "react-native-paper";
 
 const HealthCard = ({ title, value, image, onPress }) => {
+  const handlePress = (key) => {
+    navigation.navigate("DetailsScreen", { key: key });
+  };
+
   return (
     <View style={styles.card}>
       <Image source={image} style={styles.cardImage} />
