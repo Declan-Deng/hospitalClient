@@ -47,7 +47,7 @@ const Homepage = () => {
   const handlePress = (key) => {
     console.log("Navigating to DetailScreen with key:", key);
 
-    navigation.navigate("详情界面", { key: key });
+    navigation.navigate("DetailScreen", { key: key });
   };
 
   useEffect(() => {
@@ -128,7 +128,7 @@ const Homepage = () => {
             title={item.title}
             value={`${item.value}`}
             image={item.image}
-            onPress={() => handlePress(item.title)}
+            onPress={() => handlePress(item.key)}
           />
         ))}
       </ScrollView>

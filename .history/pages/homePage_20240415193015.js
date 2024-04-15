@@ -36,19 +36,12 @@ const stateMap = [
 ];
 
 const Homepage = () => {
-  const navigation = useNavigation();
   const [healthData, setHealthData] = useState([]);
   const buttonData = [
     { image: require("../assets/homepage/setting.png"), indexText: "设置" },
   ];
   const [personData, setPersonData] = useState({});
   const [alertData, setAlertData] = useState([]);
-
-  const handlePress = (key) => {
-    console.log("Navigating to DetailScreen with key:", key);
-
-    navigation.navigate("详情界面", { key: key });
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -126,9 +119,9 @@ const Homepage = () => {
           <HealthCard
             key={index}
             title={item.title}
-            value={`${item.value}`}
+            value={`当前${item.title}: xx`}
             image={item.image}
-            onPress={() => handlePress(item.title)}
+            onPress={() => handlePress(item.key)}
           />
         ))}
       </ScrollView>

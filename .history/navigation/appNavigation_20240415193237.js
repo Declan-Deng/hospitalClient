@@ -8,7 +8,6 @@ import FeedbackPage from "../pages/FeedbackPage";
 import PersonalPage from "../pages/PersonalPage";
 import ChatPage from "../pages/ChatPage";
 import TabNavigator from "./tabNavigator";
-import DetailScreen from "../pages/DetailScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -55,11 +54,7 @@ export default function AppNavigation() {
           component={ChatPage}
           options={{ headerTitleAlign: "center" }}
         />
-        <Stack.Screen
-          name="详情界面"
-          component={DetailScreen}
-          options={{ headerTitleAlign: "center" }}
-        />
+        <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

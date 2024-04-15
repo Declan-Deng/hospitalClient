@@ -1,8 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Modal, Portal, Button } from "react-native-paper";
+import * as echarts from "echarts/core";
+import { LineChart } from "echarts/charts";
+import { GridComponent } from "echarts/components";
+import { SVGRenderer, SkiaChart } from "@wuba/react-native-echarts";
 
-const HealthCard = ({ title, value, image, onPress }) => {
+echarts.use([SVGRenderer, LineChart, GridComponent]);
+
+const HealthCard = ({ title, value, image }) => {
   return (
     <View style={styles.card}>
       <Image source={image} style={styles.cardImage} />

@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+// HealthCard.js
+import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Modal, Portal, Button } from "react-native-paper";
 
-const HealthCard = ({ title, value, image, onPress }) => {
+const HealthCard = ({ title, value, image }) => {
   return (
     <View style={styles.card}>
       <Image source={image} style={styles.cardImage} />
@@ -10,7 +11,7 @@ const HealthCard = ({ title, value, image, onPress }) => {
         <Text style={styles.cardTitle}>{title}</Text>
         <Text style={styles.cardValue}>{value}</Text>
       </View>
-      <Button onPress={onPress}>查看详情</Button>
+      <View>11111</View>
     </View>
   );
 };
@@ -40,16 +41,6 @@ const styles = StyleSheet.create({
   cardValue: {
     fontSize: 24,
     color: "#007AFF",
-  },
-  modalContent: {
-    backgroundColor: "white",
-    padding: 20,
-    marginLeft: 20,
-    marginRight: 20,
-  },
-  chart: {
-    width: 20,
-    height: 20,
   },
 });
 

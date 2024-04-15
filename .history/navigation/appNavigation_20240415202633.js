@@ -55,11 +55,7 @@ export default function AppNavigation() {
           component={ChatPage}
           options={{ headerTitleAlign: "center" }}
         />
-        <Stack.Screen
-          name="详情界面"
-          component={DetailScreen}
-          options={{ headerTitleAlign: "center" }}
-        />
+        <Stack.Screen name="DetailScreen" component={DetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
