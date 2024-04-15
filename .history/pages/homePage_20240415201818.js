@@ -1,12 +1,20 @@
-import {StyleSheet, Text, View, TouchableOpacity, Image, Dimensions, ScrollView, ImageBackground} from "react-native";
-import React, {useState, useEffect} from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+  ScrollView,
+  ImageBackground,
+} from "react-native";
+import React, { useState, useEffect } from "react";
 import HealthCard from "../components/homePage-Card";
 import ProfileCard from "../components/homePage-Profile";
 import AlertCard from "../components/homePage-Alert";
-import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import globalStyles from "../GlobalStyles";
-import request from "../util/api";
-// import request from "../util/request";
+import request from "../util/request";
 import { useNavigation } from "@react-navigation/native";
 
 const stateMap = [
@@ -30,63 +38,68 @@ const stateMap = [
 const Homepage = () => {
   const navigation = useNavigation();
   const [healthData, setHealthData] = useState([]);
-  // const buttonData = [
-  //   { image: require("../assets/homepage/setting.png"), indexText: "设置" },
-  // ];
+  const buttonData = [
+    { image: require("../assets/homepage/setting.png"), indexText: "设置" },
+  ];
   const [personData, setPersonData] = useState({});
   const [alertData, setAlertData] = useState([]);
 
   const handlePress = (key) => {
-    console.log("Navigating to DetailScreen with key:", key);
-
-    navigation.navigate("详情界面", { key: key });
+    navigation.navigate("DetailScreen", { key: key });
   };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            // 在这里发送请求获取最新的数据
-            let newHealthData = await request("/resident/nowinfo");
-            let newPersonData = await request("/resident/info");
-            let newAlertData = await request("/resident/exception");
+  useEffect(() => {
+    const fetchData = async () => {
+      // 在这里发送请求获取最新的数据
+      let newHealthData = await request("/resident/nowinfo/2", { auth: false });
+      let newPersonData = await request("/resident/info/2", { auth: false });
+      let newAlertData = await request("/resident/exception/2", {
+        auth: false,
+      });
 
-            // // TODO: 测试专用
-            // console.log(newHealthData, newPersonData, newAlertData);
+      // TODO: 测试专用
+      // console.log(newHealthData, newPersonData, newAlertData);
 
-            // 数据处理
-            newPersonData = {
-                age: newPersonData.data.age,
-                name: (newPersonData.data.firstName ? newPersonData.data.firstName : '') + ' ' + (newPersonData.data.lastName ? newPersonData.data.lastName : ''),
-                guardian: newPersonData.data.guardian ? newPersonData.data.guardian : '',
-            }
+      // 数据处理
+      newPersonData = {
+        age: newPersonData.age,
+        name: newPersonData.firstName
+          ? newPersonData.firstName
+          : "" + newPersonData.lastName
+          ? newPersonData.lastName
+          : "",
+        guardian: newPersonData.guardian ? newPersonData.guardian : "",
+      };
 
       let stateArray = [];
 
-            for (let key in newHealthData.data) {
-                // console.log(key);
-                stateMap.forEach(item => {
-                    if (key === item.key) {
-                        let obj = {
-                            title: item.title,
-                            value: newHealthData.data[key],
-                            image: item.image,
-                        }
-                        stateArray.push(obj);
-                    }
-                })
-            }
+      for (let key in newHealthData) {
+        stateMap.forEach((item) => {
+          if (key === item.key) {
+            let obj = {
+              title: item.title,
+              value: newHealthData[key],
+              image: item.image,
+            };
+            stateArray.push(obj);
+          }
+        });
+      }
 
       let alertDataArr = [];
 
-            for (let key in newAlertData.data) {
-                let obj = {
-                    id: key,
-                    time: newAlertData.data[key].exceptionStartTime + newAlertData.data[key].exceptionEndTime,
-                    info: newAlertData.data[key].exceptionInfo,
-                    type: newAlertData.data[key].isCurrent ? 'current' : 'history',
-                    number: newAlertData.data[key].phone ? newAlertData.data[key].phone : '',
-                }
-                alertDataArr.push(obj);
-            }
+      for (let key in newAlertData) {
+        let obj = {
+          id: key,
+          time:
+            newAlertData[key].exceptionStartTime +
+            newAlertData[key].exceptionEndTime,
+          info: newAlertData[key].exceptionInfo,
+          type: newAlertData[key].isCurrent ? "current" : "history",
+          number: newAlertData[key].phone ? newAlertData[key].phone : "",
+        };
+        alertDataArr.push(obj);
+      }
 
       // 更新状态
       setHealthData(stateArray);
@@ -113,7 +126,7 @@ const Homepage = () => {
             title={item.title}
             value={`${item.value}`}
             image={item.image}
-            onPress={() => handlePress(item.title)}
+            onPress={() => handlePress(item.key)}
           />
         ))}
       </ScrollView>
@@ -133,27 +146,29 @@ const Homepage = () => {
     </View>
   );
 
-    const initialLayout = {width: Dimensions.get('window').width};
+  const initialLayout = { width: Dimensions.get("window").width };
 
   // const renderScene = SceneMap({
   //     userStatus: UserStatusScreen,
   //     alertInfo: AlertInfoScreen,
   // });
 
-    const renderScene = ({route}) => {
-        switch (route.key) {
-            case 'userStatus':
-                return <UserStatusScreen style={{height: 6000, overflow: 'scroll'}}/>;
-            case 'alertInfo':
-                return <AlertInfoScreen style={{height: 6000, overflow: 'scroll'}}/>;
-        }
-    };
+  const renderScene = ({ route }) => {
+    switch (route.key) {
+      case "userStatus":
+        return (
+          <UserStatusScreen style={{ height: 6000, overflow: "scroll" }} />
+        );
+      case "alertInfo":
+        return <AlertInfoScreen style={{ height: 6000, overflow: "scroll" }} />;
+    }
+  };
 
-    const [index, setIndex] = React.useState(0);
-    const [routes] = React.useState([
-        {key: 'userStatus', title: '用户状态'},
-        {key: 'alertInfo', title: '报警信息'},
-    ]);
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: "userStatus", title: "用户状态" },
+    { key: "alertInfo", title: "报警信息" },
+  ]);
 
   return (
     <View style={globalStyles.container}>
