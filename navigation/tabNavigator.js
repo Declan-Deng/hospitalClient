@@ -1,9 +1,10 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../pages/homePage';
 import PersonalPage from "../pages/PersonalPage";
-import { mdiHome, mdiHomeOutline, mdiAccount, mdiAccountOutline } from '@mdi/js';
-// import Icon from 'react-native-vector-icons/MaterialIcons';
-import Icon from '@mdi/react'; // 引入@mdi/react图标组件
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+
 
 
 const Tab = createBottomTabNavigator();
@@ -13,16 +14,18 @@ function TabNavigator() {
         <Tab.Navigator
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color }) => { // 移除了 size 参数，因为我们将直接指定大小
-                    let iconPath;
+                    let iconName;
+                    let IconComponent; // 用于根据路由决定使用哪个图标库组件
 
                     if (route.name === '主页') {
-                        iconPath = focused ? mdiHome : mdiHomeOutline;
+                        IconComponent = Ionicons;
+                        iconName = focused ? 'home' : 'home-outline';
                     } else if (route.name === '个人') {
-                        iconPath = focused ? mdiAccount : mdiAccountOutline;
+                        IconComponent = MaterialCommunityIcons;
+                        iconName = focused ? 'account-circle' : 'account-circle-outline';
                     }
 
-                    // 增加图标大小，例如设置为 1.5 倍
-                    return <Icon path={iconPath} size={1.5} color={color} />;
+                    return <IconComponent name={iconName} size={30 * 1.5} color={color} />;
                 },
                 tabBarActiveTintColor: 'tomato',
                 tabBarInactiveTintColor: 'gray',
@@ -43,12 +46,6 @@ function TabNavigator() {
                 options={{
                     headerShown: false,
                 }}/>
-            {/*<Tab.Screen*/}
-            {/*    name="Settings"*/}
-            {/*    component={Setting}*/}
-            {/*    options={{*/}
-            {/*        headerShown: false,*/}
-            {/*    }}/>*/}
 
         </Tab.Navigator>
     );

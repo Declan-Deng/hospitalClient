@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import {View, Text, StyleSheet, TouchableOpacity} from "react-native";
 import React, { useState } from "react";
 import GlobalStyles from "../GlobalStyles";
 import Toast from "react-native-toast-message";
@@ -11,6 +11,7 @@ import {
   TextInput,
   Button,
 } from "react-native-paper";
+import api from "../util/api";
 
 export default function LoginPagePage({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -34,11 +35,8 @@ export default function LoginPagePage({ navigation }) {
     return pwd.length >= 6 && pwd.length <= 16 && /^[A-Za-z0-9]+$/.test(pwd);
   };
 
-  const handleLogin = async () => {
-    // TODO: 测试专用
-    navigation.navigate("首页");
-    return;
-
+  const handleLogin = async (phoneNumber, password, navigation) => {
+    // 假设这里是你的输入验证函数
     if (!phoneNumber) {
       Toast.show({ type: "error", text1: "手机号不能为空" });
       return;
@@ -62,41 +60,52 @@ export default function LoginPagePage({ navigation }) {
       return;
     }
 
-    // navigation.navigate("首页");
-
     try {
-      setLoading(true);
-      const response = await axios.post(`${API_BASE_URL}/member/login`, {
+      const response = await api.post('member/login', {
         phone: phoneNumber,
         password: password,
       });
 
-      // 使用code字段判断登录是否成功
-      if (response.data.code === 1) {
-        // 登录成功，存储JWT到AsyncStorage
-        await AsyncStorage.setItem("userToken", response.data.data);
+      console.log("Response received:", response); // 输出完整的响应内容看看是什么
 
+      if (response.code === 1) {
+        await AsyncStorage.setItem("userToken", response.data);
         Toast.show({
           type: "success",
           text1: "登录成功",
         });
-        // 登录成功，跳转到首页
         navigation.navigate("首页");
       } else {
-        // 登录失败，显示后端返回的错误消息
+        // 显示从后端返回的具体错误消息
         Toast.show({
           type: "error",
-          text1: response.data.msg || "登录失败，请稍后再试",
+          text1: response.msg || "登录失败，请稍后再试",
         });
       }
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
-      // 显示更具体的错误信息
-      Toast.show({
-        type: "error",
-        text1: error.response?.data?.msg || "登录失败，请检查网络连接",
-      });
+      // 这里要区分是网络错误还是其他类型的错误
+      if (error.response) {
+        // 如果服务器有响应，但是返回了错误状态码
+        Toast.show({
+          type: "error",
+          text1: error.response.msg || "登录失败，错误信息：" + error.response.status,
+        });
+        console.log(error.response.msg);
+      } else if (error.request) {
+        // 请求已发出，但没有收到响应
+        Toast.show({
+          type: "error",
+          text1: "无法连接到服务器，请检查网络连接",
+        });
+        console.log(error.request);
+      } else {
+        // 在设置请求时触发了错误
+        Toast.show({
+          type: "error",
+          text1: "请求错误：" + error.message,
+        });
+        console.log(error.message);
+      }
     }
   };
 
@@ -106,6 +115,14 @@ export default function LoginPagePage({ navigation }) {
 
   const handleForget = () => {
     navigation.navigate("忘记密码");
+  };
+
+  const CustomButton = ({ onPress, title }) => {
+    return (
+        <TouchableOpacity style={styles.button} onPress={onPress}>
+          <Text style={styles.buttonText}>{title}</Text>
+        </TouchableOpacity>
+    );
   };
 
   return (
@@ -154,16 +171,8 @@ export default function LoginPagePage({ navigation }) {
           忘记密码
         </Button>
       </View>
-      <Button
-        mode="elevated"
-        style={GlobalStyles.button}
-        buttonColor={"#1652ca"}
-        textColor="white"
-        onPress={handleLogin}
-        labelStyle={GlobalStyles.ButtonFontStyles}
-      >
-        登录
-      </Button>
+       <CustomButton onPress={() => handleLogin(phoneNumber, password, navigation)} title="登录">
+      </CustomButton>
     </View>
   );
 }
@@ -182,4 +191,19 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     fontWeight: 200,
   },
+  button: {
+    borderRadius: 10,
+    width: "40%",
+    alignSelf: "center",
+    marginTop: 30,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 0,
+    backgroundColor: "#1652ca", // 添加背景色
+  },
+  buttonText: {
+    fontSize: 20,
+    color: 'white', // 文本颜色
+  }
 });
