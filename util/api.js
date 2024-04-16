@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // 创建 axios 实例
 const api = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'https://xiwaa5634xhr.ngrok.xiaomiqiu123.top',
     timeout: 5000 // 设置请求超时时间
 });
 
