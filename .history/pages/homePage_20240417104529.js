@@ -101,7 +101,7 @@ const Homepage = () => {
           type: newAlertData.data[key].isCurrent ? "current" : "history",
           number: newAlertData.data[key].phone,
         };
-        console.log(obj.number);
+        console.log(number);
         alertDataArr.push(obj);
       }
 
@@ -146,7 +146,6 @@ const Homepage = () => {
           endtime={item.endtime}
           info={item.info}
           type={item.type}
-          number={item.number}
         />
       ))}
     </View>

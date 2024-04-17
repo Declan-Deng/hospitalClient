@@ -17,7 +17,6 @@ import globalStyles from "../GlobalStyles";
 import request from "../util/api";
 // import request from "../util/request";
 import { useNavigation } from "@react-navigation/native";
-import { number } from "echarts";
 
 const stateMap = [
   {
@@ -101,7 +100,6 @@ const Homepage = () => {
           type: newAlertData.data[key].isCurrent ? "current" : "history",
           number: newAlertData.data[key].phone,
         };
-        console.log(obj.number);
         alertDataArr.push(obj);
       }
 
@@ -146,7 +144,6 @@ const Homepage = () => {
           endtime={item.endtime}
           info={item.info}
           type={item.type}
-          number={item.number}
         />
       ))}
     </View>

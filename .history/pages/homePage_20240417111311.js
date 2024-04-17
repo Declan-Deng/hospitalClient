@@ -101,10 +101,11 @@ const Homepage = () => {
           type: newAlertData.data[key].isCurrent ? "current" : "history",
           number: newAlertData.data[key].phone,
         };
-        console.log(obj.number);
+
         alertDataArr.push(obj);
       }
-
+      console.log(newAlertData.data);
+      console.log(newAlertData.data.phone);
       // 更新状态
       setHealthData(stateArray);
       setPersonData(newPersonData);
@@ -146,7 +147,6 @@ const Homepage = () => {
           endtime={item.endtime}
           info={item.info}
           type={item.type}
-          number={item.number}
         />
       ))}
     </View>

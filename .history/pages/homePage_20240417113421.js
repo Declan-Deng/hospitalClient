@@ -104,7 +104,9 @@ const Homepage = () => {
         console.log(obj.number);
         alertDataArr.push(obj);
       }
-
+      console.log(newAlertData.data);
+      console.log(newAlertData.data[2].phone);
+      console.log(obj);
       // 更新状态
       setHealthData(stateArray);
       setPersonData(newPersonData);
@@ -146,7 +148,6 @@ const Homepage = () => {
           endtime={item.endtime}
           info={item.info}
           type={item.type}
-          number={item.number}
         />
       ))}
     </View>

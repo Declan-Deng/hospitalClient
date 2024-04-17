@@ -92,7 +92,7 @@ const Homepage = () => {
 
       let alertDataArr = [];
 
-      for (let key in newAlertData.data) {
+      for (let key of newAlertData.data) {
         let obj = {
           id: key,
           starttime: newAlertData.data[key].exceptionStartTime,
@@ -101,10 +101,11 @@ const Homepage = () => {
           type: newAlertData.data[key].isCurrent ? "current" : "history",
           number: newAlertData.data[key].phone,
         };
-        console.log(obj.number);
+
         alertDataArr.push(obj);
       }
-
+      console.log(newAlertData.data);
+      console.log(newAlertData.data[2].phone);
       // 更新状态
       setHealthData(stateArray);
       setPersonData(newPersonData);
@@ -146,7 +147,6 @@ const Homepage = () => {
           endtime={item.endtime}
           info={item.info}
           type={item.type}
-          number={item.number}
         />
       ))}
     </View>

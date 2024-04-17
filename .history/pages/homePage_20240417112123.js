@@ -99,12 +99,13 @@ const Homepage = () => {
           endtime: newAlertData.data[key].exceptionEndTime,
           info: newAlertData.data[key].exceptionInfo,
           type: newAlertData.data[key].isCurrent ? "current" : "history",
-          number: newAlertData.data[key].phone,
+          number: newAlertData.data[2].phone,
         };
-        console.log(obj.number);
+
         alertDataArr.push(obj);
       }
-
+      console.log(newAlertData.data);
+      console.log(newAlertData.data[2].phone);
       // 更新状态
       setHealthData(stateArray);
       setPersonData(newPersonData);
@@ -146,7 +147,6 @@ const Homepage = () => {
           endtime={item.endtime}
           info={item.info}
           type={item.type}
-          number={item.number}
         />
       ))}
     </View>
