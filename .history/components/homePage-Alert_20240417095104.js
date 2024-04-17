@@ -20,7 +20,7 @@ const AlertCard = ({ starttime, endtime, info, type, number }) => (
         {type === "current" ? "当前报警" : "历史报警"}
       </Text>
       <Text style={styles.cardTime}>开始时间：{starttime}</Text>
-      {type !== "current" && (
+      {type === "current" && (
         <Text style={styles.cardTime}>警报解除：{endtime}</Text>
       )}
       <Text style={styles.cardInfo}>{info}</Text>

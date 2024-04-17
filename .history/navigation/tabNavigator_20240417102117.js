@@ -23,11 +23,11 @@ function TabNavigator() {
             iconName = focused ? "account-circle" : "account-circle-outline";
           }
 
-          return <IconComponent name={iconName} size={35} color={color} />;
+          return <IconComponent name={iconName} size={30} color={color} />;
         },
         tabBarActiveTintColor: "tomato",
         tabBarInactiveTintColor: "gray",
-        tabBarStyle: { height: 80 }, // 设置标签栏的高度
+        tabBarStyle: { height: 70 }, // 设置标签栏的高度
         tabBarLabelStyle: { fontSize: 20, fontWeight: 500 }, // 增加标签文字的大小
       })}
     >

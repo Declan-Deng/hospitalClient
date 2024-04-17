@@ -20,19 +20,17 @@ const AlertCard = ({ starttime, endtime, info, type, number }) => (
         {type === "current" ? "当前报警" : "历史报警"}
       </Text>
       <Text style={styles.cardTime}>开始时间：{starttime}</Text>
-      {type !== "current" && (
+      {type === "current" && (
         <Text style={styles.cardTime}>警报解除：{endtime}</Text>
       )}
       <Text style={styles.cardInfo}>{info}</Text>
     </View>
-    {type !== "history" && (
-      <TouchableOpacity onPress={() => makeCall(number)}>
-        <Image
-          source={require("../assets/homepage/phone.png")}
-          style={{ width: 40, height: 40 }}
-        />
-      </TouchableOpacity>
-    )}
+    <TouchableOpacity onPress={() => makeCall(number)}>
+      <Image
+        source={require("../assets/homepage/phone.png")}
+        style={{ width: 40, height: 40 }}
+      />
+    </TouchableOpacity>
   </View>
 );
 
