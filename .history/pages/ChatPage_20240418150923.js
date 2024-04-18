@@ -24,6 +24,7 @@ export default function ChatPage() {
       console.log("WebSocket connected");
     };
 
+
     ws.onmessage = (event) => {
       console.log("Received raw data:", event.data);
       try {
@@ -71,17 +72,74 @@ export default function ChatPage() {
         console.error("Received data: ", event.data);
       }
     };
+    
 
-    ws.onerror = (error) => {
-      console.error("WebSocket error: ", error);
-    };
+    // ws.onmessage = (event) => {
+    //   console.log("Received raw data:", event.data);
+    //   const data = JSON.parse(event.data);
+    //   const incomingMessage = {
+    //     _id: messages.length + 1,
+    //     text: data.message,
+    //     createdAt: new Date(),
+    //     user: {
+    //       _id: 2,
+    //       name: "Doctor",
+    //       avatar: data.avatar || "../assets/doctor.jpg",
+    //     },
+    //   };
+    //   setMessages((previousMessages) => {
+    //     const updatedMessages = GiftedChat.append(
+    //       previousMessages,
+    //       incomingMessage
+    //     );
+    //     console.log("Updated messages:", updatedMessages);
+    //     return updatedMessages;
+    //   });
+    // };
 
-    setSocket(ws);
+  //   ws.onmessage = (event) => {
+  //     console.log("Received raw data:", event.data);
 
-    return () => {
-      ws.close();
-    };
-  }, []);
+  //     let messageData;
+  //     try {
+  //       // 尝试解析JSON，看是否为JSON数据
+  //       messageData = JSON.parse(event.data);
+  //     } catch (error) {
+  //       // 如果解析失败，说明不是JSON，手动创建消息对象
+  //       console.error("Error parsing JSON: ", error);
+  //       messageData = {
+  //         userName: "User", // 或者其他默认用户名
+  //         avatar: "https://dummyimage.com/128x128/000000/ffffff&text=U", // 默认头像
+  //         message: event.data, // 直接使用接收到的文本作为消息内容
+  //       };
+  //     }
+
+  //     // 更新消息列表
+  //     setMessages((prevMessages) => [
+  //       ...prevMessages,
+  //       {
+  //         id: prevMessages.length + 1, // 生成新的ID
+  //         user: messageData.userName || "User",
+  //         avatar:
+  //           messageData.avatar ||
+  //           "https://dummyimage.com/128x128/000000/ffffff&text=U",
+  //         content: messageData.message,
+  //       },
+  //     ]);
+
+  //     console.log("Processed message:", messageData);
+  //   };
+
+  //   ws.onerror = (error) => {
+  //     console.error("WebSocket error: ", error);
+  //   };
+
+  //   setSocket(ws);
+
+  //   return () => {
+  //     ws.close();
+  //   };
+  // }, []);
 
   const onSend = useCallback(
     (messagesToSend = []) => {

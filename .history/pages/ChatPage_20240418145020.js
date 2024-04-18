@@ -24,23 +24,47 @@ export default function ChatPage() {
       console.log("WebSocket connected");
     };
 
+    // ws.onmessage = (event) => {
+    //   console.log("Received raw data:", event.data);
+    //   const data = JSON.parse(event.data);
+    //   const incomingMessage = {
+    //     _id: messages.length + 1,
+    //     text: data.message,
+    //     createdAt: new Date(),
+    //     user: {
+    //       _id: 2,
+    //       name: "Doctor",
+    //       avatar: data.avatar || "../assets/doctor.jpg",
+    //     },
+    //   };
+    //   setMessages((previousMessages) => {
+    //     const updatedMessages = GiftedChat.append(
+    //       previousMessages,
+    //       incomingMessage
+    //     );
+    //     console.log("Updated messages:", updatedMessages);
+    //     return updatedMessages;
+    //   });
+    // };
+
     ws.onmessage = (event) => {
       console.log("Received raw data:", event.data);
-      try {
-        if (
-          event.data &&
-          typeof event.data === "string" &&
-          event.data.startsWith("{") &&
-          event.data.endsWith("}")
-        ) {
-          // 处理JSON格式的数据
+
+      // Check if the data is in a valid JSON format
+      if (
+        event.data &&
+        typeof event.data === "string" &&
+        event.data.startsWith("{") &&
+        event.data.endsWith("}")
+      ) {
+        try {
           const data = JSON.parse(event.data);
           const incomingMessage = {
-            _id: messages.length + 1,
+            _id: messages.length + 1, // Better to generate a unique ID here
             text: data.message,
             createdAt: new Date(),
             user: {
-              _id: 2,
+              _id: 2, // Ensure the ID aligns with your application's logic
               name: "Doctor",
               avatar: data.avatar || "../assets/doctor.jpg",
             },
@@ -48,27 +72,12 @@ export default function ChatPage() {
           setMessages((previousMessages) =>
             GiftedChat.append(previousMessages, incomingMessage)
           );
-          console.log("Processed message:", data);
-        } else {
-          // 处理非JSON格式的数据，把它也转换为消息对象
-          const incomingMessage = {
-            _id: messages.length + 1,
-            text: event.data,
-            createdAt: new Date(),
-            user: {
-              _id: 2,
-              name: "System",
-              avatar: "https://dummyimage.com/128x128/000000/ffffff&text=U",
-            },
-          };
-          setMessages((previousMessages) =>
-            GiftedChat.append(previousMessages, incomingMessage)
-          );
-          console.log("Handled non-JSON data as message:", event.data);
+        } catch (error) {
+          console.error("Error parsing JSON: ", error);
         }
-      } catch (error) {
-        console.error("Error parsing JSON: ", error);
-        console.error("Received data: ", event.data);
+      } else {
+        console.log("Received non-JSON data:", event.data);
+        // Optionally handle non-JSON data or show an error message
       }
     };
 

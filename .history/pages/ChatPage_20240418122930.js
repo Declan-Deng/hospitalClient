@@ -25,51 +25,20 @@ export default function ChatPage() {
     };
 
     ws.onmessage = (event) => {
-      console.log("Received raw data:", event.data);
-      try {
-        if (
-          event.data &&
-          typeof event.data === "string" &&
-          event.data.startsWith("{") &&
-          event.data.endsWith("}")
-        ) {
-          // 处理JSON格式的数据
-          const data = JSON.parse(event.data);
-          const incomingMessage = {
-            _id: messages.length + 1,
-            text: data.message,
-            createdAt: new Date(),
-            user: {
-              _id: 2,
-              name: "Doctor",
-              avatar: data.avatar || "../assets/doctor.jpg",
-            },
-          };
-          setMessages((previousMessages) =>
-            GiftedChat.append(previousMessages, incomingMessage)
-          );
-          console.log("Processed message:", data);
-        } else {
-          // 处理非JSON格式的数据，把它也转换为消息对象
-          const incomingMessage = {
-            _id: messages.length + 1,
-            text: event.data,
-            createdAt: new Date(),
-            user: {
-              _id: 2,
-              name: "System",
-              avatar: "https://dummyimage.com/128x128/000000/ffffff&text=U",
-            },
-          };
-          setMessages((previousMessages) =>
-            GiftedChat.append(previousMessages, incomingMessage)
-          );
-          console.log("Handled non-JSON data as message:", event.data);
-        }
-      } catch (error) {
-        console.error("Error parsing JSON: ", error);
-        console.error("Received data: ", event.data);
-      }
+      const data = JSON.parse(event.data);
+      const incomingMessage = {
+        _id: messages.length + 1,
+        text: data.message,
+        createdAt: new Date(),
+        user: {
+          _id: 2,
+          name: "Doctor",
+          avatar: data.avatar || "../assets/doctor.jpg",
+        },
+      };
+      setMessages((previousMessages) =>
+        GiftedChat.append(previousMessages, incomingMessage)
+      );
     };
 
     ws.onerror = (error) => {
@@ -89,8 +58,11 @@ export default function ChatPage() {
         if (socket) {
           socket.send(
             JSON.stringify({
-              targetUserId: "2",
+              targetUserId: "2", // Doctor's user ID
               message: message.text,
+              userId: 50, // User's own ID
+              userName: "阳光", // User's name
+              avatar: "../assets/oldman.jpg", // User's avatar
             })
           );
         }
